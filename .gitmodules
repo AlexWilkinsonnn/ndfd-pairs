@@ -2,6 +2,10 @@
 	path = ndfd_depos/nd-sim-tools
   url = git@github.com:AlexWilkinsonnn/nd-sim-tools.git
   branch = ndfd_pairs
+[submodule "fd_detsim_reco/duneextrapolation"]
+	path = fd_detsim_reco/duneextrapolation
+  url = git@github.com:AlexWilkinsonnn/duneextrapolation.git
+  branch = ndfd_pairs
 [submodule "nd_detsim/larnd-sim"]
 	path = nd_detsim/larnd-sim
   url = git@github.com:AlexWilkinsonnn/larnd-sim.git
@@ -9,8 +13,4 @@
 [submodule "nd_detsim/larpixsoft"]
 	path = nd_detsim/larpixsoft
   url = git@github.com:AlexWilkinsonnn/larpixsoft.git
-  branch = ndfd_pairs
-[submodule "fd_detsim_reco/duneextrapolation"]
-	path = fd_detsim_reco/duneextrapolation
-  url = git@github.com:AlexWilkinsonnn/duneextrapolation.git
   branch = ndfd_pairs
