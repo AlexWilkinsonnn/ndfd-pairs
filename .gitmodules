@@ -1,0 +1,4 @@
+[submodule "ndfd_depos/nd-sim-tools"]
+	path = ndfd_depos/nd-sim-tools
+  url = git@github.com:AlexWilkinsonnn/nd-sim-tools.git
+  branch = ndfd_pairs
