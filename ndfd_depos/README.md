@@ -1,6 +1,6 @@
 # ndfd_depos
 
-Generates a neutrino event (genie w/ ND flux) and runs particle propagation (edep-sim) in a large liquid argon volume (LArBath). Event goes through translation and rotation (around beam axis) throws in ND to find a realisation that is selected. This event is moved to FD (Earth's curvature correction applied) and translation throws applied until a selected realisation is found. The result is the truth level information required to produce ND-FD pairs.
+Generates a neutrino event (genie with ND flux) and runs particle propagation (edep-sim) in a large liquid argon volume (LArBath). Event goes through translation and rotation (around beam axis) throws in ND to find a realisation that is selected. This event is moved to FD (Earth's curvature correction applied) and translation throws applied until a selected realisation is found. The result is the truth level information required to produce ND-FD pairs.
 
 ## System
 
@@ -78,8 +78,5 @@ dtype([('eventID', '<u4'), ('x_vert', '<f4'), ('y_vert', '<f4'), ('z_vert', '<f4
 * `segments` and `vertices` are the dataset names required by `larnd-sim`
 * `lepton` dataset is included to provide information required to make estimate the TMS reco
 * The selection throws do not account for the fate of the muon in the ND but only the hadronic veto. The output of the geometric efficiency muon fate prediction neural network can be found in the `nn_lep_contained_prob` and `nn_lep_tracker_prob` columns of the `lepton` dataset. May want to apply some cut on this.
-* There is also a `produce_edep-paramreco_larbath_transrots.sh` script which runs the old ND
-parameterised reconstruction and writes this the HDF5. This is not very useful since it uses the ND
-event before the throws to find a selected realisation. It is nice to have the true neutrino
-information summarised neatly on the HDF5 thought (`Ev`, `lepE`, `isCC`, ...)
+* There is also a `produce_edep-paramreco_larbath_transrots.sh` script which also runs the old ND parameterised reconstruction and writes this the HDF5. The reco is not very useful since it uses the ND event before the throws to find a selected realisation. It does provide true neutrino information summarised neatly on the HDF5 though (`Ev`, `lepE`, `isCC`, ...)
 
