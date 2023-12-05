@@ -14,3 +14,42 @@ step downloaded.
 The outputted HDF5 files contain all the required information to make paired data of (ND detector
 response, FD reconstruction) and (ND detector response, FD detector response).
 
+## Moving data around
+
+To make use of both Fermigrid and GPU resources I had to copy files to and from dCache to an
+external cluster. To make these copies safely we need to use `ifdh cp`. Doing this nto from a
+dunegpvm can be tricky:
+
+### Setup
+
+```
+git clone git@github.com:fermitools/cigetcert.git
+cd cigetcert
+git checkout tags/1.21
+cd ../
+export SINGULARITY_BIND="/cvmfs,/home,/tmp,..."
+singularity shell /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7\:latest
+source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
+setup python v3_9_2
+python -m venv .venv.3_9_2_cigetcert
+source .venv.3_9_2_cigetcert/bin/activate
+pip install swig lxml M2Crypto pykerberos pyOpenSSL
+```
+
+### Copying
+
+Put your krb5_fnal.conf on your home directory
+
+```
+export SINGULARITY_BIND="/cvmfs,/home,/tmp,..."
+singularity shell /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7\:latest
+export KRB5_CONFIG=/home/awilkins/krb5_fnal.conf
+kinit
+source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
+source .venv.3_9_2_cigetcert/bin/activate
+python cigetcert/cigetcert -i 'Fermi National Accelerator Laboratory' -n
+voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
+setup ifdhc
+ifdh cp /pnfs/dune/persistent/...
+```
+
