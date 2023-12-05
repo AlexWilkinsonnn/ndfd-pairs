@@ -10,8 +10,9 @@ Recommended to do this on a dunegpvm
 
 ```
 # Get code on ndfd_pairs branch of nd-sim-tools
-git submodule update --remote nd-sim-tools
+git submodule update --init --remote ndfd_depos/nd-sim-tools
 # Prep for submitting jobs
+cd ndfd_depos/
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 setup duneutil v09_78_06d00 -q e20:prof
 setup jobsub_client v_lite

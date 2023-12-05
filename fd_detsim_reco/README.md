@@ -12,9 +12,10 @@ Recommended to do this on a dunegpvm
 
 ```
 # Get code on ndfd_pairs branch of duneextrapolation
-git submodule update --remote duneextrapolation
+git submodule update --init --remote fd_detsim/duneextrapolation
 
 # Build larsoft module
+cd fd_detsim/
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 mkdir larsoft_area
 cd larsoft_area/

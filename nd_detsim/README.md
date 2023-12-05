@@ -10,9 +10,10 @@ Requires GPU resources to larnd-sim. Job submission scripts and instructions on 
 
 ```
 # Get code on v0.3.4_ndfd_pairs branch of fork of larnd-sim
-git submodule update --remote larnd-sim
+git submodule update --init --remote nd_detsim/larnd-sim
 # Get code on ndfd_pairs branch of larpixsoft
-git submodule update --remote larpixsoft
+git submodule update --init --remote nd_detsim/larpixsoft
+cd nd_detsim
 ```
 
 ## Input Data
