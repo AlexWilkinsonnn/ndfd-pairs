@@ -4,16 +4,20 @@ Runs ND-LAr detector simulation (larnd-sim) and uses packet timestamps and trigg
 
 ## System
 
-Requires GPU resources to larnd-sim. Job submission scripts and instructionss on how to use them are for clusters using Slurm. For other workload managers these scripts will need to be changed.
+Requires GPU resources to larnd-sim. Job submission scripts and instructions on how to use them are for clusters using Slurm. For other workload managers these scripts will need to be changed.
 
 ## Setup
 
 ```
 # Get code on v0.3.4_ndfd_pairs branch of fork of larnd-sim
 git submodule update --remote larnd-sim
-# Get code on ndfd_pairs branch of fork of larpixsoft
+# Get code on ndfd_pairs branch of larpixsoft
 git submodule update --remote larpixsoft
 ```
+
+## Input Data
+
+Requires HDF5 files from the previous `ndfd_depos` stage
 
 ## Instructions
 
@@ -21,9 +25,9 @@ git submodule update --remote larpixsoft
 
 2. Make a file `larnd-sim/setup.sh` that activates this python environment and adds larnd-sim to
    the python path:
-   ```
-   export PYTHONPATH="/<base_path>/ndfd-pairs/ndfd_detsim/larnd-sim:$PYTHONPATH"
-   ```
+  ```
+  export PYTHONPATH="/<base_path>/ndfd-pairs/ndfd_detsim/larnd-sim:$PYTHONPATH"
+  ```
 
 3. Edit `run_larndsim_ndfdpairs.sh` to configure the slurm job (`#SBATCH` options) and set the
    directory paths. The array Slurm parameter should be configured to like `1-<number_of_files_process>`.  `SCRATCH_DIR` should point be the path of the local disk for the GPU worker
