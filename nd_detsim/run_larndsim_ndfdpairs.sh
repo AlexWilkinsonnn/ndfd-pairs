@@ -1,13 +1,13 @@
 #!/bin/bash
-# #SBATCH -p GPU
-# #SBATCH -N 1
-# #SBATCH -c 2
-# #SBATCH -J larnd-sim
-# #SBATCH -t 260
-# #SBATCH --array=1-100
-# #SBATCH --gres=gpu:1
-# #SBATCH --error=/home/awilkins/larnd-sim/job_scripts/logs/err/%x.%A_%a.err
-# #SBATCH --output=/home/awilkins/larnd-sim/job_scripts/logs/out/%x.%A_%a.out
+#SBATCH -p GPU
+#SBATCH -N 1
+#SBATCH -c 2
+#SBATCH -J larnd-sim
+#SBATCH -t 260
+#SBATCH --array=1-100
+#SBATCH --gres=gpu:1
+#SBATCH --error=/home/awilkins/larnd-sim/job_scripts/logs/err/%x.%A_%a.err
+#SBATCH --output=/home/awilkins/larnd-sim/job_scripts/logs/out/%x.%A_%a.out
 
 ################################################################################
 # Options
