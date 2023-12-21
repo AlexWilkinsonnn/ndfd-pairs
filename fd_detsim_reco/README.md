@@ -12,25 +12,25 @@ Recommended to do this on a dunegpvm
 
 ```
 # Get code on ndfd_pairs branch of duneextrapolation
-git submodule update --init --remote fd_detsim/duneextrapolation
+git submodule update --init --remote fd_detsim_reco/duneextrapolation
 
 # Build larsoft module
-cd fd_detsim/
+cd fd_detsim_reco/
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 mkdir larsoft_area
 cd larsoft_area/
 mrb newDev -v 09_78_04 -q e20:prof
 source localProducts_larsoft_v09_78_04_e20_prof/setup
 cd srcs/
-mv ../../duneextrapolation .
+cp -r ../../duneextrapolation .
 mrb g dunereco
 mrb uc
 cd ../
-cd $MRB_BUILDER
+cd $MRB_BUILDDIR
 mrbsetenv && mrb i --generator=ninja && mrbslp
 
 # Prep for submitting jobs
-setup duneutil v09_78_06d00 -q e20:prof
+setup duneutil v09_78_03d01 -q e20:prof
 setup jobsub_client v_lite
 setup_fnal_security
 ```
@@ -55,6 +55,8 @@ jobsub (`/pnfs/...`)
   ```
   jobsub_submit -G dune -N 100 --disk=60Gb --memory=6000MB --expected-lifetime=54h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox:///<path_to_repo>/fd_detsim_reco/larsoft_area/jobdata.tar.gz --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' file:///<path_to_repo>/fd_detsim_reco/larsoft_area/srcs/duneextrapolation/scripts/jobs/produce_fd_pair_reco_resp.sh <path_to_nd_detsim_output>
   ```
+  `-N` should be set to the number of files in the input directory (ND detsim HDF5 files). Disk
+  usage if for files with ~300 events, scale accordingly.
 
 ## Output
 

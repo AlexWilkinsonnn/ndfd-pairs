@@ -79,4 +79,7 @@ The outputted file is a HDF5 file with the following keys:
 * `lepton` dataset is included to provide information required to make estimate the TMS reco
 * The selection throws do not account for the fate of the muon in the ND but only the hadronic veto. The output of the geometric efficiency muon fate prediction neural network can be found in the `nn_lep_contained_prob` and `nn_lep_tracker_prob` columns of the `lepton` dataset. May want to apply some cut on this.
 * There is also a `produce_edep-paramreco_larbath_transrots.sh` script which also runs the old ND parameterised reconstruction and writes this the HDF5. The reco is not very useful since it uses the ND event before the throws to find a selected realisation. It does provide true neutrino information summarised neatly on the HDF5 though (`Ev`, `lepE`, `isCC`, ...)
+* `DUNE_ND_GeoEff` is provided after build. If changes need to be made to this it will need to be
+rebuilt and the new libraries carefully added back to this repository. The original code can be
+found at `https://github.com/weishi10141993/DUNE_ND_GeoEff/tree/N2FD`.
 
