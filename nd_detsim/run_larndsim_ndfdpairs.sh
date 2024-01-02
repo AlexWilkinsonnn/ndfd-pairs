@@ -1,19 +1,19 @@
 #!/bin/bash
-# #SBATCH -p GPU
-# #SBATCH -N 1
-# #SBATCH -c 2
-# #SBATCH -J larnd-sim
-# #SBATCH -t 260
-# #SBATCH --array=1-100
-# #SBATCH --gres=gpu:1
-# #SBATCH --error=/home/awilkins/larnd-sim/job_scripts/logs/err/%x.%A_%a.err
-# #SBATCH --output=/home/awilkins/larnd-sim/job_scripts/logs/out/%x.%A_%a.out
+#SBATCH -p GPU
+#SBATCH -N 1
+#SBATCH -c 2
+#SBATCH -J larnd-sim
+#SBATCH -t 260
+#SBATCH --array=1-2
+#SBATCH --gres=gpu:1
+#SBATCH --error=/home/awilkins/ndfd_pairs/ndfd-pairs_test/logs/err/%x.%A_%a.err
+#SBATCH --output=/home/awilkins/ndfd_pairs/ndfd-pairs_test/logs/out/%x.%A_%a.out
 
 ################################################################################
 # Options
 
-LARNDSIM_WORK_DIR="/home/awilkins/larnd-sim/my_fork/larnd-sim"
-LARPIXSOFT_WORK_DIR="/home/awilkins/larnd-sim/larpixsoft"
+LARNDSIM_WORK_DIR="/home/awilkins/ndfd_pairs/ndfd-pairs_test/ndfd-pairs/nd_detsim/larnd-sim"
+LARPIXSOFT_WORK_DIR="/home/awilkins/ndfd_pairs/ndfd-pairs_test/ndfd-pairs/nd_detsim/larpixsoft"
 SCRATCH_DIR="/state/partition1/awilkins/scratch/${SLURM_JOB_ID}"
 
 INPUT_DIR=$1
@@ -44,6 +44,13 @@ python cli/simulate_pixels.py --input_filename $input_file \
                               --pixel_layout larndsim/pixel_layouts/multi_tile_layout-3.0.40.yaml \
                               --output_filename $output_file_larndsim \
                               --response_file larndsim/bin/response_38.npy
+# If larnd-sim command crashed during execution there will be missing data down the line,
+# just throw away these event if this happens
+exit_code=$?
+if [ $exit_code -ne 0 ]; then
+  rm -r ${SCRATCH_DIR}
+  exit 1
+fi
 
 cd $LARPIXSOFT_WORK_DIR
 

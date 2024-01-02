@@ -43,6 +43,13 @@ python cli/simulate_pixels.py --input_filename $input_file \
                               --pixel_layout larndsim/pixel_layouts/multi_tile_layout-3.0.40.yaml \
                               --output_filename $output_file_larndsim \
                               --response_file larndsim/bin/response_38.npy
+# If larnd-sim command crashed during execution there will be missing data down the line,
+# just throw away these event if this happens
+exit_code=$?
+if [ $exit_code -ne 0 ]; then
+  rm -r ${SCRATCH_DIR}
+  exit 1
+fi
 
 cd $LARPIXSOFT_WORK_DIR
 
