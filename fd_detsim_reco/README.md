@@ -23,7 +23,7 @@ mrb newDev -v 09_78_04 -q e20:prof
 source localProducts_larsoft_v09_78_04_e20_prof/setup
 cd srcs/
 cp -r ../../duneextrapolation .
-mrb g dunereco
+mrb g --tag v09_78_03d01 dunereco
 mrb uc
 cd ../
 cd $MRB_BUILDDIR
