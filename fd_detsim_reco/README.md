@@ -55,8 +55,7 @@ jobsub (`/pnfs/...`)
   ```
   jobsub_submit -G dune -N 100 --disk=60Gb --memory=6000MB --expected-lifetime=54h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox:///<path_to_repo>/fd_detsim_reco/larsoft_area/jobdata.tar.gz --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' file:///<path_to_repo>/fd_detsim_reco/larsoft_area/srcs/duneextrapolation/scripts/jobs/produce_fd_pair_reco_resp.sh <path_to_nd_detsim_output>
   ```
-  `-N` should be set to the number of files in the input directory (ND detsim HDF5 files). Disk
-  usage if for files with ~300 events, scale accordingly.
+  There are two `<path_to_repo>` a one `<path_to_nd_detsim_output>` that need to be substituted for. `-N` should be set to the number of files in the input directory (ND detsim HDF5 files). Disk usage if for files with ~300 events, scale accordingly.
 
 ## Output
 
