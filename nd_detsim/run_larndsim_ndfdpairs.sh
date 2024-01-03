@@ -4,10 +4,10 @@
 #SBATCH -c 2
 #SBATCH -J larnd-sim
 #SBATCH -t 260
-#SBATCH --array=1-2
+#SBATCH --array=1-100
 #SBATCH --gres=gpu:1
-#SBATCH --error=/home/awilkins/ndfd_pairs/ndfd-pairs_test/logs/err/%x.%A_%a.err
-#SBATCH --output=/home/awilkins/ndfd_pairs/ndfd-pairs_test/logs/out/%x.%A_%a.out
+#SBATCH --error=/home/awilkins/larnd-sim/job_scripts/logs/err/%x.%A_%a.err
+#SBATCH --output=/home/awilkins/larnd-sim/job_scripts/logs/out/%x.%A_%a.out
 
 ################################################################################
 # Options

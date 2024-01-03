@@ -22,7 +22,10 @@ Requires HDF5 files from the previous `ndfd_depos` stage
 
 ## Instructions
 
-1. Setup a python environment using the `requirements.txt` (venv or conda)
+1. Setup a python environment using the `requirements.txt` (venv or conda). Do this on the GPU node
+   you will run on so that all the correct cuda stuff is there. I found it easier to use conda to
+   get packages since it installs `cudatoolkit` for you. Just make sure you have the conda-forge
+   channel setup: `conda config --add channels conda-forge`.
 
 2. Make a file `larnd-sim/setup.sh` that activates this python environment and adds larnd-sim to
    the python path:
@@ -36,7 +39,7 @@ Requires HDF5 files from the previous `ndfd_depos` stage
 
 4. Submit the job with:
   ```
-  sbatch run_larndsim_ndfdpairs /<path_to_ndfd_depos_data_directory> /<path_to_output_directory>
+  sbatch run_larndsim_ndfdpairs.sh /<path_to_ndfd_depos_data_directory> /<path_to_output_directory>
   ```
 
 ## Output
