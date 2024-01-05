@@ -53,3 +53,7 @@ setup ifdhc
 ifdh cp /pnfs/dune/persistent/...
 ```
 
+## Using Output Data
+
+The final output comes from the `fd_detsim_reco` stage and can be used to train macgine learning algorithms that map from ND detector response to FD reconstrution or to FD detector response. To prepare a dataset, iterate over the hd5f files and write the desired data to the desired format for input to a model. Note that when iterating the hdf5 files it is possible (though rare) that `fd_resp` or `fd_reco` will be missing for an event, in which case just skip this event.
+
