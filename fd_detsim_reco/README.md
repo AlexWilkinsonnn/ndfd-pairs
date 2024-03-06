@@ -19,7 +19,7 @@ cd fd_detsim_reco/
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 mkdir larsoft_area
 cd larsoft_area/
-mrb newDev -v 09_78_04 -q e20:prof
+mrb newDev -v v09_78_04 -q e20:prof
 source localProducts_larsoft_v09_78_04_e20_prof/setup
 cd srcs/
 cp -r ../../duneextrapolation .
@@ -115,22 +115,23 @@ cd fd_detsim_reco/
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 mkdir larsoft_area_duneextrapolation
 cd larsoft_area_duneextrapolation/
-mrb newDev -v 09_78_04 -q e20:prof
-source localProducts_larsoft_v09_78_04_e20_prof/setup
+mrb newDev -v v09_78_03 -q e20:prof
 cd srcs/
 git clone git@github.com:AlexWilkinsonnn/duneextrapolation.git
 cd duneextrapolation/
 git checkout simchannels_for_v07_06_02_dunetpc
 cd ../
-git clone git@github.com:AlexWilkinsonnn/larsim.git
 cd larsim/
 git checkout v09_38_01-elecdrift_fix
-cd../
-mrb g --tag v09_78_03d01 dunereco
+cd ../../
+cp srcs/duneextrapolation/scripts/dev/* .
+# go into setup.sh and update paths
+source setup.sh
+mrb g --tag v09_78_03d01 dunecore
+mrb g --tag v09_78_03 larsoft
+mrb g --tag v09_08_03 larexamples
 mrb uc
-cd ../
-cd $MRB_BUILDDIR
-mrbsetenv && mrb i --generator=ninja && mrbslp
+source build_ninja.sh
 
 # Open a fresh shell...
 
