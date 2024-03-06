@@ -81,3 +81,26 @@ The outputted file is a HDF5 file with the following keys:
 rebuilt and the new libraries carefully added back to this repository. The original code can be
 found at `https://github.com/weishi10141993/DUNE_ND_GeoEff/tree/N2FD`.
 
+## TDR Pairs Instructions
+
+Generates a neutrino event (genie with ND flux) and runs particle propagation (edep-sim) in a large liquid argon volume (LArBath). ND parameterised reconstruction is run by pretending the edep-sim file has the ND hall geometry. The event is moved to FD (Earth's curvature correction applied) and translation throws applied until a selected realisation is found. The result is the truth level information required to produce the FD pair, and the TDR-era ND reconstruction of the event.
+
+### Instructions
+
+1. Create job tarball
+  ```
+  cd nd-sim-tools/inputs
+  tar -czvf jobdata.tar.gz ND_CAFMaker/ DUNE_ND_GeoEff/ sim_inputs_larbath_selected_ndfd_pairs/
+  ```
+
+2. Edit `nd-sim-tools/produce_scripts/produce_edep-paramreco_larbath_transrots_tdr.sh` to set directories for
+   outputted files, whether to save intermediary files, and flux options
+
+3. Submit to grid
+  ```
+  jobsub_submit -G dune -N 200 --disk=60Gb --memory=3000MB --expected-lifetime=6h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox://<path_to_repo>/ndfd_depos/nd-sim-tools/inputs/jobdata.tar.gz --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' file://<path_to_repo>/ndfd_depos/nd-sim-tools/produce_scripts/produce_edep-paramreco_larbath_transrots.sh 0 1e15
+  ```
+  There are two `<path_to_repo>` that need to be substitued for.`1e15` POT generates files with ~300 neutrinos, if you change this you will also need to scale `--disk` and `--expected_lifetime`. The first argument to the script (`0` in above) is just the offset for output file numbering, if you want to produce extra files to the same output directory after a previous job just increase this.
+
+
+

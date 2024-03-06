@@ -14,6 +14,24 @@ step downloaded.
 The outputted HDF5 files contain all the required information to make paired data of (ND detector
 response, FD reconstruction) and (ND detector response, FD detector response).
 
+## TDR-era simulation ndfd pairs
+
+There is code for making ND-FD reco-reco pairs with as close to the TDR software as I can get.
+This is for training models that will be applicable to analyses that use MCC11.
+
+TDR era means tag `last_unstructured_cafs` of `DUNE/ND_CAFMaker.git` for ND, tag `v07_06_02` of
+`dunetpc` for FD simulation and reconstruction, and tag `v07_09_00` of `dunetpc` for FD
+CAFMaker. These versions come from asking, snooping, and guessing.
+
+Caveats of this dataset due to software restrictions:
+- Cannot load SimEnergyDeposit into old `dunetpc`. Load them into newer larsoft with
+  `duneextrapolation` and run the drifting module to get SimChannel. Load these into `dunetpc`.
+- Diffucult to load selection throws output into ND CAFMaker. Don't do selection throws at the ND,
+  FD event still has translations applied.
+
+This workflow does not require the `nd_detsim/` step. Instructions can be found at the bottom of
+the READMEs.
+
 ## Moving data around
 
 To make use of both Fermigrid and GPU resources I had to copy files to and from dCache to an
