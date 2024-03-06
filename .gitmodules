@@ -16,5 +16,5 @@
   branch = ndfd_pairs
 [submodule "fd_detsim_reco/dunetpc"]
 	path = fd_detsim_reco/dunetpc
-  url = git@github.com:AlexWilkinsonnn/dunetpc.git
+	url = git@github.com:AlexWilkinsonnn/dunetpc.git
   branch = main
