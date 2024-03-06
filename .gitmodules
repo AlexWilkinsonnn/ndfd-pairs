@@ -14,7 +14,7 @@
 	path = nd_detsim/larpixsoft
   url = git@github.com:AlexWilkinsonnn/larpixsoft.git
   branch = ndfd_pairs
-[submodule "nd_detsim/dunetpc"]
-	path = nd_detsim/dunetpc
+[submodule "fd_detsim_reco/dunetpc"]
+	path = fd_detsim_reco/dunetpc
   url = git@github.com:AlexWilkinsonnn/dunetpc.git
   branch = main
