@@ -81,7 +81,7 @@ The outputted file is a HDF5 file with the following keys:
 rebuilt and the new libraries carefully added back to this repository. The original code can be
 found at `https://github.com/weishi10141993/DUNE_ND_GeoEff/tree/N2FD`.
 
-## TDR Pairs Instructions
+## TDR Pairs
 
 Generates a neutrino event (genie with ND flux) and runs particle propagation (edep-sim) in a large liquid argon volume (LArBath). ND parameterised reconstruction is run by pretending the edep-sim file has the ND hall geometry. The event is moved to FD (Earth's curvature correction applied) and translation throws applied until a selected realisation is found. The result is the truth level information required to produce the FD pair, and the TDR-era ND reconstruction of the event.
 
