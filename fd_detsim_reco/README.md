@@ -1,4 +1,4 @@
-# fd_detsim_reco
+# fd\_detsim\_reco
 
 Loads FD energy depositions into an art-root file and runs FD simulation to generate detector
 simulation and reconstruction. ND detector simulation is also loaded so it can be projected onto FD
@@ -156,6 +156,7 @@ source build_ninja.sh # this should now build
 # Open a fresh shell...
 
 # Prep for submitting jobs
+source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 setup duneutil v09_78_03d01 -q e20:prof
 setup jobsub_client v_lite
 setup_fnal_security
@@ -166,7 +167,7 @@ setup_fnal_security
 1. Create job tarballs
   ```
   cd larsoft_area_duneextrapolation/
-  tar -czvf jobdata_duneextrapolation.tar.gz srcs/ build_slf7.x86_64/ localProducts_larsoft_v09_78_04_e20_prof/
+  tar -czvf jobdata_duneextrapolation.tar.gz srcs/ build_slf7.x86_64/ localProducts_larsoft_v09_78_03_e20_prof/
   cd ../larsoft_area_dunetpc/
   tar -czvf jobdata_dunetpc.tar.gz srcs/ build_slf7.x86_64/ localProducts_larsoft_v07_06_02_e17_prof/
   ```
@@ -175,12 +176,12 @@ setup_fnal_security
 
 3. Submit to grid the duneextrapolation SimChannel jobs
   ```
-  jobsub_submit -G dune -N 100 --disk=30Gb --memory=6000MB --expected-lifetime=2h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox:///<path_to_repo>/fd_detsim_reco/larsoft_area_duneextrapolation/jobdata_duneextrapolation.tar.gz --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' file:///<path_to_repo>/fd_detsim_reco/larsoft_area_duneextrapolation/srcs/duneextrapolation/scripts/jobs/produce_fd_pair_simchannels.sh <path_to_ndfd_depos>
+  jobsub_submit -G dune -N 100 --disk=30Gb --memory=6000MB --expected-lifetime=2h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox://<path_to_repo>/fd_detsim_reco/larsoft_area_duneextrapolation/jobdata_duneextrapolation.tar.gz --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' file://<path_to_repo>/fd_detsim_reco/larsoft_area_duneextrapolation/srcs/duneextrapolation/scripts/jobs/produce_fd_pair_simchannels.sh <path_to_ndfd_depos>
   ```
   In this step and the next there are two `<path_to_repo>` a one `<path_to_ndfd_depos>/<path_to_ndfd_fdsimchannels>` that need to be substituted for. `-N` should be set to the number of files in the input directory (HDF5 files). Disk usage and lifetime is for files with ~300 events, scale accordingly.
 
 4. Submit to grid the dunetpc reco jobs
   ```
-  jobsub_submit -G dune -N 100 --disk=30Gb --memory=6000MB --expected-lifetime=12h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox:///<path_to_repo>/fd_detsim_reco/larsoft_area_dunetpc/jobdata_dunetpc.tar.gz --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' file:///<path_to_repo>/fd_detsim_reco/larsoft_area_dunetpc/srcs/dunetpc/scripts/jobs/produce_fd_pair_reco_from_simchannels.sh <path_to_ndfd_fdsimchannels>
+  jobsub_submit -G dune -N 100 --disk=30Gb --memory=6000MB --expected-lifetime=12h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox://<path_to_repo>/fd_detsim_reco/larsoft_area_dunetpc/jobdata_dunetpc.tar.gz --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' file://<path_to_repo>/fd_detsim_reco/larsoft_area_dunetpc/srcs/dunetpc/scripts/jobs/produce_fd_pair_reco_from_simchannels.sh <path_to_ndfd_fdsimchannels>
   ```
 
