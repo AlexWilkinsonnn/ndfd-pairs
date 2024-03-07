@@ -121,6 +121,7 @@ git clone git@github.com:AlexWilkinsonnn/duneextrapolation.git
 cd duneextrapolation/
 git checkout simchannels_for_v07_06_02_dunetpc
 cd ../
+git clone git@github.com:AlexWilkinsonnn/larsim.git
 cd larsim/
 git checkout v09_38_01-elecdrift_fix
 cd ../../
@@ -144,7 +145,7 @@ mrb newDev -v v07_06_02 -q e17:prof
 cd srcs/
 cp -r ../../dunetpc .
 cd ../
-cp srcs/dunetpc/scripts/* .
+cp srcs/dunetpc/scripts/dev/* .
 # go into setup.sh and update paths
 source setup.sh
 mrb uc
