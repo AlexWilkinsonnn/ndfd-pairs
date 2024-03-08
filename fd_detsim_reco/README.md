@@ -153,6 +153,12 @@ source build_ninja.sh # this will fail and is a required step
 source setup_old_cmake.sh
 source build_ninja.sh # this should now build
 
+# Grab libraries the CVN depends on that are on the dunegpvms but not the grid contrainers :(
+ifdh cp -D /pnfs/dune/persistent/users/awilkins/larbath_ndfd_pairs/dunegpvm_lib64.tar.gz . 
+tar -xzvf dunegpvm_lib64.tar.gz
+# OR, if the tar balll is missing from persistent, on a dunegpvm
+cp -r /usr/lib64 .
+
 # Open a fresh shell...
 
 # Prep for submitting jobs
@@ -169,7 +175,7 @@ setup_fnal_security
   cd larsoft_area_duneextrapolation/
   tar -czvf jobdata_duneextrapolation.tar.gz srcs/ build_slf7.x86_64/ localProducts_larsoft_v09_78_03_e20_prof/
   cd ../larsoft_area_dunetpc/
-  tar -czvf jobdata_dunetpc.tar.gz srcs/ build_slf7.x86_64/ localProducts_larsoft_v07_06_02_e17_prof/
+  tar -czvf jobdata_dunetpc.tar.gz srcs/ build_slf7.x86_64/ localProducts_larsoft_v07_06_02_e17_prof/ lib64/
   ```
 
 2. Edit the files `larsoft_area_duneextrapolation/srcs/duneextrapolation/scripts/jobs/produce_fd_pair_simchannels.sh` and `larsoft_area_dunetpc/srcs/dunetpc/scripts/jobs/produce_fd_pair_reco_from_simchannels.sh` to set output paths
