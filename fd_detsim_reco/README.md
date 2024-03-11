@@ -154,7 +154,7 @@ source setup_old_cmake.sh
 source build_ninja.sh # this should now build
 
 # Grab libraries the CVN depends on that are on the dunegpvms but not the grid contrainers :(
-ifdh cp -D /pnfs/dune/persistent/users/awilkins/larbath_ndfd_pairs/dunegpvm_lib64.tar.gz . 
+ifdh cp -D /pnfs/dune/persistent/users/awilkins/larbath_ndfd_pairs/dunegpvm_lib64.tar.gz .
 tar -xzvf dunegpvm_lib64.tar.gz
 # OR, if the tar balll is missing from persistent, on a dunegpvm
 cp -r /usr/lib64 .
@@ -190,4 +190,13 @@ setup_fnal_security
   ```
   jobsub_submit -G dune -N 100 --disk=30Gb --memory=6000MB --expected-lifetime=12h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox://<path_to_repo>/fd_detsim_reco/larsoft_area_dunetpc/jobdata_dunetpc.tar.gz --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' file://<path_to_repo>/fd_detsim_reco/larsoft_area_dunetpc/srcs/dunetpc/scripts/jobs/produce_fd_pair_reco_from_simchannels.sh <path_to_ndfd_fdsimchannels>
   ```
+
+Once grid jobs are finished you may want to use the `add_h5_ndfdreco.py` script to join all the reco datasets into one hdf5 file. To use:
+```
+# In a fresh shell
+cd larsoft_area_dunetpc/
+cp srcs/dunetpc/scripts/h5_add/* .
+source setup_h5_add_venv.sh
+python add_h5_ndfdreco.py <pnfs_path_to_ndfdpairs> <output_h5_name>
+```
 
