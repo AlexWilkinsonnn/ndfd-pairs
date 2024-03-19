@@ -95,6 +95,7 @@ depositions and projected onto wire and tick)
 figure out why. This lead to positions in forward facing anodes being smaller and backward facing
 anode being larger. I correct this empirically with the `NDProjForwardAnodeXShift` and
 `NDProjBackwardAnodeXShift`.
+  * It turns out this is from the drifiting electron cloud inducing enough current to trigger a packet before it gets collected at the pixel. So to make the drift coordinates actually align with the centre of the electron clouds (which is required for tracks that pass through pixel planes to align), it needs to be shifted back a bit. AFAIK there is not study to calculate this shift but is ~0.5cm.
 * The default time readout window is 6000 ticks but 4492 is enough to have the full FD volume in
 the trigger
 
