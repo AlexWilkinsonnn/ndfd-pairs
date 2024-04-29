@@ -34,7 +34,7 @@ Requires HDF5 files from the previous `ndfd_depos` stage
   ```
 
 3. Edit `run_larndsim_ndfdpairs.sh` to configure the slurm job (`#SBATCH` options) and set the
-   directory paths. The array Slurm parameter should be configured to like `1-<number_of_files_process>`.  `SCRATCH_DIR` should point be the path of the local disk for the GPU worker
+   directory paths. The array Slurm parameter should be configured to like `1-<number_of_files_process>`.  `SCRATCH_DIR` should point to the path of the local disk for the GPU worker
    node.
 
 4. Submit the job with:
