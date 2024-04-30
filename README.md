@@ -59,7 +59,7 @@ pip install swig lxml M2Crypto pykerberos pyOpenSSL
 Put your krb5_fnal.conf on your home directory
 
 ```
-export SINGULARITY_BIND="/cvmfs,/home,/tmp,..."
+export SINGULARITY_BIND="/cvmfs,/home,/tmp"
 singularity shell /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7\:latest
 export KRB5_CONFIG=/home/awilkins/krb5_fnal.conf
 kinit
