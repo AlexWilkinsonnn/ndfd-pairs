@@ -48,7 +48,7 @@ The job will add the following keys to the HDF5 files:
 
 * `3d_packets` (ND-LAr detsim with reconstructed drift coordinate)
   ```
-  dtype([('eventID', '<u4'), ('adc', '<f4'), ('x', '<f4'), ('x_module', '<f4'), ('y', '<f4'), ('z', '<f4'), ('z_module', '<f4'), ('forward_facing_anode', '<u4')])
+  dtype([('eventID', '<u4'), ('adc', '<f4'), ('x', '<f4'), ('x_module', '<f4'), ('y', '<f4'), ('z', '<f4'), ('z_module', '<f4'), ('forward_facing_anode', '<u4'), ('infilled', '<u4')])
   ```
 
 * `mc_packets_assn` (contribution from to ND-LAr packets from true tracks)

@@ -81,7 +81,7 @@ depositions and projected onto wire and tick)
     * `tpc_set` ([0, 11])
       * `rop_id` ([0,3] 0 is U (induction) 1 is V (induction) 2&3 are Z (collection))
         ```
-        dtype([('adc' '<u4'), ('local_ch', '<i4'), ('tick', '<i4'), ('nd_drift_dist', '<f8'), ('fd_drift_dist', '<f8'), ('nd_x_module', '<f8'), ('wire_dist', '<f8'), ('forward_facing_anode', '<f4')])
+        dtype([('adc' '<u4'), ('local_ch', '<i4'), ('tick', '<i4'), ('nd_drift_dist', '<f8'), ('fd_drift_dist', '<f8'), ('nd_x_module', '<f8'), ('wire_dist', '<f8'), ('forward_facing_anode', '<i4'), ('infilled', '<i4')])
         ```
 
 * `ndfd_vertices_projs` (Wire and tick projection of shared vertex after aligning ND packets with FD energy depositions)
@@ -95,9 +95,10 @@ depositions and projected onto wire and tick)
 figure out why. This lead to positions in forward facing anodes being smaller and backward facing
 anode being larger. I correct this empirically with the `NDProjForwardAnodeXShift` and
 `NDProjBackwardAnodeXShift`.
-  * It turns out this is from the drifiting electron cloud inducing enough current to trigger a packet before it gets collected at the pixel. So to make the drift coordinates actually align with the centre of the electron clouds (which is required for tracks that pass through pixel planes to align), it needs to be shifted back a bit. AFAIK there is not study to calculate this shift but is ~0.5cm.
+  * It turns out this is from the drifting electron cloud inducing enough current to trigger a packet before it gets collected at the pixel. So to make the drift coordinates actually align with the centre of the electron clouds (which is required for tracks that pass through pixel planes to align), it needs to be shifted back a bit. AFAIK there is not study to calculate this shift but is ~0.5cm.
 * The default time readout window is 6000 ticks but 4492 is enough to have the full FD volume in
 the trigger
+* In this stage you may have used an infill network to make '3d_packets_infilled'. If so run `produce_fd_pair_reco_resp.sh` with `ADDRESP_FCL` set to `run_AddFDResp_Infilled.fcl` to ensure the correct 3d packets are read in and that NDProj{Forward,Backward}AnodeXShift are set to zero (these will have already been applied as preprocessing for the infill network)
 
 ## TDR Pairs
 
