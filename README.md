@@ -35,8 +35,9 @@ the READMEs.
 ## Moving data around
 
 To make use of both Fermigrid and GPU resources I had to copy files to and from dCache to an
-external cluster. To make these copies safely we need to use `ifdh cp`. Doing this nto from a
-dunegpvm can be tricky:
+external cluster. To make these copies safely we need to use `ifdh cp`. Doing this not from a
+dunegpvm can be tricky, I have found two ways to do this. The "Alternative Method" is probably
+best to try first.
 
 ### Setup
 
@@ -45,8 +46,8 @@ git clone git@github.com:fermitools/cigetcert.git
 cd cigetcert
 git checkout tags/1.21
 cd ../
-export SINGULARITY_BIND="/cvmfs,/home,/tmp,..."
-singularity shell /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7\:latest
+export APPTAINER_BIND="/cvmfs,/home,/tmp,..."
+apptainer shell /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7\:latest
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 setup python v3_9_2
 python -m venv .venv.3_9_2_cigetcert
@@ -59,8 +60,8 @@ pip install swig lxml M2Crypto pykerberos pyOpenSSL
 Put your krb5_fnal.conf on your home directory
 
 ```
-export SINGULARITY_BIND="/cvmfs,/home,/tmp"
-singularity shell /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7\:latest
+export APPTAINER_BIND="/cvmfs,/home,/tmp"
+apptainer shell /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7\:latest
 export KRB5_CONFIG=/home/awilkins/krb5_fnal.conf
 kinit
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
@@ -69,6 +70,26 @@ python cigetcert/cigetcert -i 'Fermi National Accelerator Laboratory' -n
 voms-proxy-init -noregen -rfc -voms dune:/dune/Role=Analysis
 setup ifdhc
 ifdh cp /pnfs/dune/persistent/...
+```
+
+### Alternative Method
+
+The method above just stopped working for me at some point so here is an alternate and maybe better
+one:
+
+```
+export APPTAINER_BIND="/cvmfs,/home,/tmp,/run"
+apptainer shell /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7\:latest
+export KRB5_CONFIG=/home/awilkins/krb5_fnal.conf
+kinit
+source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
+htgettoken -a htvaultprod.fnal.gov -i dune # Paste the link into browser to authenticate if needed
+# Your NUID will be printed to terminal from the above command in this format
+# Storing vault token in /tmp/vt_uNUID
+# Storing bearer token in /run/user/NUID/bt_uNUID
+export BEARER_TOKEN_FILE=/run/user/<NUID>/bt_u<NUID>
+setup ifdhc
+ifdh cp /pnfs/dune/persistent/... # I get some errors when the command looks for the proxy that doesnt exist but the copy still works
 ```
 
 ## Using Output Data
