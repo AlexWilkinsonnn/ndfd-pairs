@@ -83,13 +83,16 @@ apptainer shell /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7\:lat
 export KRB5_CONFIG=/home/awilkins/krb5_fnal.conf
 kinit
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
-htgettoken -a htvaultprod.fnal.gov -i dune # Paste the link into browser to authenticate if needed
+# May ask you to paste a link into browser to authenticate
+htgettoken -a htvaultprod.fnal.gov -i dune
 # Your NUID will be printed to terminal from the above command in this format
 # Storing vault token in /tmp/vt_uNUID
 # Storing bearer token in /run/user/NUID/bt_uNUID
 export BEARER_TOKEN_FILE=/run/user/<NUID>/bt_u<NUID>
 setup ifdhc
-ifdh cp /pnfs/dune/persistent/... # I get some errors when the command looks for the proxy that doesnt exist but the copy still works
+# I get some errors when the command looks for the proxy that doesnt exist but the copy still works
+# To get rid of these to use the commands in a pipe just redirect stderr with 2>/dev/null
+ifdh cp /pnfs/dune/persistent/...
 ```
 
 ## Using Output Data
