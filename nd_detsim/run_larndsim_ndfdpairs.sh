@@ -3,17 +3,17 @@
 #SBATCH -N 1
 #SBATCH -c 2
 #SBATCH -J larnd-sim
-#SBATCH -t 260
-#SBATCH --array=1-100
+#SBATCH -t 360
+#SBATCH --array=1-183
 #SBATCH --gres=gpu:1
-#SBATCH --error=/home/awilkins/larnd-sim/job_scripts/logs/err/%x.%A_%a.err
-#SBATCH --output=/home/awilkins/larnd-sim/job_scripts/logs/out/%x.%A_%a.out
+#SBATCH --error=/home/awilkins/ndfd_pairs/logs/err/%x.%A_%a.err
+#SBATCH --output=/home/awilkins/ndfd_pairs/logs/out/%x.%A_%a.out
 
 ################################################################################
 # Options
 
-LARNDSIM_WORK_DIR="/home/awilkins/ndfd_pairs/ndfd-pairs_test/ndfd-pairs/nd_detsim/larnd-sim"
-LARPIXSOFT_WORK_DIR="/home/awilkins/ndfd_pairs/ndfd-pairs_test/ndfd-pairs/nd_detsim/larpixsoft"
+LARNDSIM_WORK_DIR="/home/awilkins/ndfd_pairs/ndfd-pairs/nd_detsim/larnd-sim"
+LARPIXSOFT_WORK_DIR="/home/awilkins/ndfd_pairs/ndfd-pairs/nd_detsim/larpixsoft"
 SCRATCH_DIR="/state/partition1/awilkins/scratch/${SLURM_JOB_ID}"
 
 INPUT_DIR=$1
@@ -33,6 +33,7 @@ output_file_final=${SCRATCH_DIR}/${output_name_final}
 echo "Job id ${SLURM_JOB_ID}"
 echo "Job array task id ${SLURM_ARRAY_TASK_ID}"
 echo "Running on ${SLURM_JOB_NODELIST}"
+echo "With cuda device ${CUDA_VISIBLE_DEVICES}"
 echo "Input file is ${input_file}"
 echo "Output file will be ${output_file_final}"
 

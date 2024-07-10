@@ -32,6 +32,7 @@ output_file_final=${SCRATCH_DIR}/${output_name_final}
 echo "Job id ${SLURM_JOB_ID}"
 echo "Job array task id ${SLURM_ARRAY_TASK_ID}"
 echo "Running on ${SLURM_JOB_NODELIST}"
+echo "With cuda device ${CUDA_VISIBLE_DEVICES}"
 echo "Input file is ${input_file}"
 echo "Output file will be ${output_file_final}"
 
