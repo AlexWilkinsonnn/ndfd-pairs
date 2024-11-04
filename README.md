@@ -89,11 +89,9 @@ htgettoken -a htvaultprod.fnal.gov -i dune
 # Storing vault token in /tmp/vt_uNUID
 # Storing bearer token in /run/user/NUID/bt_uNUID
 export BEARER_TOKEN_FILE=/run/user/<NUID>/bt_u<NUID>
+setup ifdhc
 export IFDH_PROXY_ENABLE=0
 export IFDH_TOKEN_ENABLE=1
-setup ifdhc
-# I get some errors when the command looks for the proxy that doesnt exist but the copy still works
-# To get rid of these to use the commands in a pipe just redirect stderr with 2>/dev/null
 ifdh cp /pnfs/dune/persistent/...
 ```
 
