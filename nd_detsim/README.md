@@ -30,7 +30,7 @@ Requires HDF5 files from the previous `ndfd_depos` stage
 2. Make a file `larnd-sim/setup.sh` that activates this python environment and adds larnd-sim to
    the python path:
   ```
-  export PYTHONPATH="/<base_path>/ndfd-pairs/ndfd_detsim/larnd-sim:$PYTHONPATH"
+  export PYTHONPATH="/<base_path>/ndfd-pairs/nd_detsim/larnd-sim:$PYTHONPATH"
   ```
 
 3. Edit `run_larndsim_ndfdpairs.sh` to configure the slurm job (`#SBATCH` options) and set the
