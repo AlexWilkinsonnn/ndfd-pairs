@@ -11,6 +11,16 @@ Recommended to do this on a dunegpvm
 ```
 # Get code on ndfd_pairs branch of nd-sim-tools
 git submodule update --init --remote ndfd_depos/nd-sim-tools
+
+# Set up python virtual environment in your data area
+export TARBALL_DIR=/exp/dune/data/users/${USER}/ndfd-pairs-tarballs
+mkdir ${TARBALL_DIR}; cd ${TARBALL_DIR}
+python -m venv .venv_3.9.2_ndfd_pairs
+source .venv_3.9.2_ndfd_pairs/bin/activate
+# scipy 1.10 is the latest version compatible with edep-sim's numpy version 1.20.1 which
+# the venv cannot overwrite
+python -m pip install torch scipy==1.10 h5py fire
+
 # Prep for submitting jobs
 cd ndfd_depos/
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
@@ -93,8 +103,9 @@ Same as before
 
 1. Create job tarball
   ```
-  cd nd-sim-tools/inputs
-  tar -czvf jobdata.tar.gz ND_CAFMaker/ DUNE_ND_GeoEff/ sim_inputs_larbath_selected_ndfd_pairs/
+  export ND_SIM_TOOLS_INPUTS_DIR=/exp/dune/app/users/${USER}/ndfd-pairs/ndfd_depos/nd-sim-tools/inputs
+  cd /exp/dune/data/users/${USER}/ndfd-pairs-tarballs
+  tar -czvf jobdata.tar.gz ${ND_SIM_TOOLS_INPUTS_DIR}/ND_CAFMaker/ ${ND_SIM_TOOLS_INPUTS_DIR}/DUNE_ND_GeoEff/ ${ND_SIM_TOOLS_INPUTS_DIR}/sim_inputs_larbath_selected_ndfd_pairs/ .venv_3.9.2_ndfd_pairs/
   ```
 
 2. Edit `nd-sim-tools/produce_scripts/produce_edep-paramreco_larbath_transrots_tdr.sh` to set directories for
@@ -102,7 +113,7 @@ Same as before
 
 3. Submit to grid
   ```
-  jobsub_submit -G dune -N 200 --disk=60Gb --memory=3000MB --expected-lifetime=6h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox://<path_to_repo>/ndfd_depos/nd-sim-tools/inputs/jobdata.tar.gz --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true&&TARGET.HAS_CVMFS_dune_osgstorage_org==true)' file://<path_to_repo>/ndfd_depos/nd-sim-tools/produce_scripts/produce_edep-paramreco_larbath_transrots_tdr.sh 0 1e15
+  jobsub_submit -G dune -N 200 --disk=60Gb --memory=3000MB --expected-lifetime=6h --cpu=1 --resource-provides=usage_model=DEDICATED,OPPORTUNISTIC,OFFSITE --tar_file_name=dropbox://<path_to_tarball_from_step_1> --use-cvmfs-dropbox -l '+SingularityImage=\"/cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest\"' --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true&&TARGET.HAS_CVMFS_dune_osgstorage_org==true)' file://<path_to_repo>/ndfd_depos/nd-sim-tools/produce_scripts/produce_edep-paramreco_larbath_transrots_tdr.sh 0 1e15
   ```
   There are two `<path_to_repo>` that need to be substitued for.`1e15` POT generates files with ~300 neutrinos, if you change this you will also need to scale `--disk` and `--expected_lifetime`. The first argument to the script (`0` in above) is just the offset for output file numbering, if you want to produce extra files to the same output directory after a previous job just increase this.
 
