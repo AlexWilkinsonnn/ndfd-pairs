@@ -4,7 +4,7 @@ Generates a neutrino event (genie with ND flux) and runs particle propagation (e
 
 ## System
 
-Recommended to do this on a dunegpvm in SL7 container
+Recommended to do this on a dunegpvm in SL7 container w/ DUNE software set up.
 
 ## Setup
 
