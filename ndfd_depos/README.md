@@ -107,7 +107,7 @@ Same as before
 
 1. Create job tarball
   ```
-  export ND_SIM_TOOLS_INPUTS_DIR=/exp/dune/app/users/${USER}/ndfd-pairs/ndfd_depos/nd-sim-tools/inputs
+  export ND_SIM_TOOLS_INPUTS_DIR=/exp/dune/data/users/${USER}/ndfd-pairs/ndfd_depos/nd-sim-tools/inputs
   cd /exp/dune/data/users/${USER}/ndfd-pairs-tarballs
   tar -czvf jobdata.tar.gz ${ND_SIM_TOOLS_INPUTS_DIR}/ND_CAFMaker/ ${ND_SIM_TOOLS_INPUTS_DIR}/DUNE_ND_GeoEff/ ${ND_SIM_TOOLS_INPUTS_DIR}/sim_inputs_larbath_selected_ndfd_pairs/ .venv_3.9.2_ndfd_pairs/
   ```
