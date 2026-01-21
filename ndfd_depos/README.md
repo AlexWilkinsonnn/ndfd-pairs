@@ -110,7 +110,7 @@ Same as before
   ```
   cd /exp/dune/data/users/${USER}/ndfd-pairs/ndfd_depos/nd-sim-tools/inputs
   tar -czvf jobdata.tar.gz ND_CAFMaker/ DUNE_ND_GeoEff/ sim_inputs_larbath_selected_ndfd_pairs/ .venv_3.9.2_ndfd_pairs/
-
+  mv jobdata.tar.gz /exp/dune/data/users/${USER}/ndfd-pairs-tarballs
   ```
 
 2. Edit `nd-sim-tools/produce_scripts/produce_edep-paramreco_larbath_transrots_tdr.sh` to set directories for
