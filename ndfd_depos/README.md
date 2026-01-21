@@ -10,6 +10,8 @@ Recommended to do this on a dunegpvm in SL7 container w/ DUNE software set up.
 
 ```
 # Get code on ndfd_pairs branch of nd-sim-tools
+export NDFD_PAIRS_DIR=/exp/dune/data/users/${USER}/ndfd-pairs
+cd $NDFD_PAIRS_DIR
 git submodule update --init --remote ndfd_depos/nd-sim-tools
 
 # Set up python virtual environment in your data area
@@ -21,7 +23,7 @@ source .venv_3.9.2_ndfd_pairs/bin/activate
 # the venv cannot overwrite
 python -m pip install torch scipy==1.10 h5py fire
 deactivate
-cd /exp/dune/app/users/${USER}/ndfd-pairs
+cd $NDFD_PAIRS_DIR
 
 # Prep for submitting jobs
 cd ndfd_depos/
