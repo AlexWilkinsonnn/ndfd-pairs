@@ -20,6 +20,8 @@ source .venv_3.9.2_ndfd_pairs/bin/activate
 # scipy 1.10 is the latest version compatible with edep-sim's numpy version 1.20.1 which
 # the venv cannot overwrite
 python -m pip install torch scipy==1.10 h5py fire
+deactivate
+cd /exp/dune/app/users/${USER}/ndfd-pairs
 
 # Prep for submitting jobs
 cd ndfd_depos/
