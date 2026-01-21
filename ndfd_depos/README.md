@@ -14,7 +14,8 @@ git submodule update --init --remote ndfd_depos/nd-sim-tools
 
 # Set up python virtual environment in your data area
 export TARBALL_DIR=/exp/dune/data/users/${USER}/ndfd-pairs-tarballs
-mkdir ${TARBALL_DIR}; cd ${TARBALL_DIR}
+mkdir ${TARBALL_DIR};
+cd ndfd_depos/nd-sim-tools/inputs
 python -m venv .venv_3.9.2_ndfd_pairs
 source .venv_3.9.2_ndfd_pairs/bin/activate
 # scipy 1.10 is the latest version compatible with edep-sim's numpy version 1.20.1 which
@@ -105,9 +106,8 @@ Same as before
 
 1. Create job tarball
   ```
-  export ND_SIM_TOOLS_INPUTS_DIR=/exp/dune/app/users/${USER}/ndfd-pairs/ndfd_depos/nd-sim-tools/inputs
-  cd /exp/dune/data/users/${USER}/ndfd-pairs-tarballs
-  tar -czvf jobdata.tar.gz ${ND_SIM_TOOLS_INPUTS_DIR}/ND_CAFMaker/ ${ND_SIM_TOOLS_INPUTS_DIR}/DUNE_ND_GeoEff/ ${ND_SIM_TOOLS_INPUTS_DIR}/sim_inputs_larbath_selected_ndfd_pairs/ .venv_3.9.2_ndfd_pairs/
+  cd /exp/dune/data/users/${USER}/ndfd-pairs/ndfd_depos/nd-sim-tools/inputs
+  tar -czvf jobdata.tar.gz ND_CAFMaker/ DUNE_ND_GeoEff/ sim_inputs_larbath_selected_ndfd_pairs/ .venv_3.9.2_ndfd_pairs/
   ```
 
 2. Edit `nd-sim-tools/produce_scripts/produce_edep-paramreco_larbath_transrots_tdr.sh` to set directories for
