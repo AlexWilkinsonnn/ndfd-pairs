@@ -20,6 +20,7 @@ mkdir ${TARBALL_DIR};
 cd ndfd_depos/nd-sim-tools/inputs
 python -m venv .venv_3.9.2_ndfd_pairs
 source .venv_3.9.2_ndfd_pairs/bin/activate
+python -m ensurepip --upgrade
 # scipy 1.10 is the latest version compatible with edep-sim's numpy version 1.20.1 which
 # the venv cannot overwrite
 python -m pip install torch scipy==1.10 h5py fire
