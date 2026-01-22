@@ -16,7 +16,7 @@ git submodule update --init --remote ndfd_depos/nd-sim-tools
 
 # Set up python virtual environment in your data area
 export TARBALL_DIR=/exp/dune/data/users/${USER}/ndfd-pairs-tarballs
-mkdir ${TARBALL_DIR};
+mkdir -p ${TARBALL_DIR};
 cd ndfd_depos/nd-sim-tools/inputs
 python -m venv .venv_3.9.2_ndfd_pairs
 source .venv_3.9.2_ndfd_pairs/bin/activate
