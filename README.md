@@ -29,7 +29,7 @@ Caveats of this dataset due to software restrictions:
 - Diffucult to load selection throws output into ND CAFMaker. Don't do selection throws at the ND,
   FD event still has translations applied.
 
-This workflow does not require the `nd_detsim/` step. Instructions can be found at the bottom of
+This workflow does not require the `nd_detsim/` step, but does require the `nd_ehad_corr/` step. Instructions can be found at the bottom of
 the READMEs.
 
 ## Recent developments: 'DiffEdep' and ND sim. improvements
