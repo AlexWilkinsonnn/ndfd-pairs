@@ -2,7 +2,7 @@
 
 This is the final step in the NDFD Transformer training dataset generation procedure. It takes the paired dataset output from the `fd_detsim_reco` module, which already has a density-based correction to the ND hadronic energy reconstruction, and applies one additional correction of the form $$E_\text{corr.} = \frac{m_\text{ND}}{m_\text{LAr}} * (E - b_\text{LAr}) + b_\text{ND}$$. A correction of this form is applied to each of the ND reco. hadronic energy variables in the training dataset except "Other", which is set so that the reconstructed hadronic energy at the ND in each event is equal to the sum of the reconstructed hadronic energy for each particle type. A correction is not applied if it would make the reco. energy negative. Each particle type gets its own correction parameters, which are set using a guess-and-check method to approximately minimize the $\chi^2_\text{red.}$ between the training dataset and a reference CAF file.
 
-For the FHC on-axis orientation, the following parameters are used for the shift (format $m_\text{LAr}$):
+For the FHC on-axis orientation, the following parameters are used for the shift (format: $m_\text{LAr}$, $b_\text{LAr}$, $m_\text{ND}$, $b_\text{ND}$):
 - Hadronic energy (which affects `Ev_reco`): [0.67, 0.001, 0.665, 0.0]
 - `eRecoP`: [0.86, 0.0001, 0.8599, 0.0]
 - `eRecoN`: [0.42, 0.002, 0.4, 0.0]
