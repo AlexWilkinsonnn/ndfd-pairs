@@ -83,7 +83,7 @@ found at `https://github.com/weishi10141993/DUNE_ND_GeoEff/tree/N2FD`.
 
 ## TDR Pairs
 
-Generates a neutrino event (genie with ND flux) and runs particle propagation (edep-sim) in a large liquid argon volume (LArBath). ND parameterised reconstruction is run by pretending the edep-sim file has the ND hall geometry. The event is moved to FD (Earth's curvature correction applied) and translation throws applied until a selected realisation is found. The result is the truth level information required to produce the FD pair, and the TDR-era ND reconstruction of the event.
+Generates a neutrino event (genie with ND flux) and runs particle propagation (edep-sim) in a large liquid argon volume (LArBath). ND parameterised reconstruction is run by pretending the edep-sim file has the ND hall geometry. The event is moved to FD (Earth's curvature correction applied) and translation throws applied until a selected realisation is found. The result is the truth level information required to produce the FD pair, and the TDR-era ND reconstruction of the event. Before ND reco, the ND event's muonic component is then re-simulated in a realistic ND Hall, and that muon component is used for reconstruction. The hadronic component is also corrected at the ND to account for the density in the dead region in a realistic detector being different from LAr. Note that this correction only corrects about half of the difference in reconstruction performance.
 
 ### Setup
 
