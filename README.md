@@ -36,23 +36,20 @@ the READMEs.
 
 The main branch of this repository has not changed meaningfully in the recent past, as we've 
 considered different improvements and directions the ndfd-transformer program will go. These
-improvements and developments have taken place in the two other branches, first in `lep_swapper`,
+improvements and developments have taken place in the two other branches, first in `Ehad_corr`,
 and then in `DiffEdep`.
 
-### `lep_swapper` branch
+### `Ehad_corr` branch
 
-In Spring 2024, we thought we were ready to develop a training dataset with oscillations, where 
-a muon neutrino event at the ND would be paired with an oscillated electron neutrino event at 
-the FD. This feature was going to be developed in the `lep_swapper` branch. However, we soon 
-discovered that we were not ready for this step because we saw that we were not simulating 
-the ND properly. Because we had been simulating the entire ND hall as an infinite vat of LAr, 
-the simulated muonic and hadronic components were both wrong, leading to the wrong 
-relationship between true and reco. energies at the ND. For muons, the error was due to the 
-gap between TMS/ND-GAr and ND-LAr, which when simulated as LAr instead of air leads to way 
-more energy deposited by the muon in that region, an overall shorter muon track, and not 
-enough energy reconstructed for tracker-matched muons. The fix here was to simulate just the muon 
-in a realistic ND hall, and use those reco. quantities stitched together with the hadronic 
-system as a complete ND event. The code to do this is in 
+In Spring 2024, we saw that we were not simulating the ND properly. Because we had been 
+simulating the entire ND hall as an infinite vat of LAr, the simulated muonic and hadronic 
+components were both wrong, leading to the wrong relationship between true and reco. 
+energies at the ND. For muons, the error was due to the gap between TMS/ND-GAr and ND-LAr, 
+which when simulated as LAr instead of air leads to way more energy deposited by the muon 
+in that region, an overall shorter muon track, and not enough energy reconstructed for 
+tracker-matched muons. The fix here was to simulate just the muon in a realistic ND hall, 
+and use those reco. quantities stitched together with the hadronic system as a complete 
+ND event. The code to do this is in 
 `ndfd_depos/nd-sim-tools/inputs/ND_CAFMaker/makeCAF_resim-muon.cxx`, which is called by an 
 edited version of 
 `/ndfd_depos/nd-sim-tools/produce_scripts/produce_edep-paramreco_larbath_transrots_tdr.sh`. 
@@ -65,7 +62,7 @@ hits, but with weights applied to account for the density differences. This is d
 `ndfd_depos/nd-sim-tools/inputs/sim_inputs_larbath_selected_ndfd_pairs/dumpTree_tdr_nogeoeff_larbath.py`, 
 lines 253-634. This doesn't totally take care of the unrealistic reconstruction, so we also 
 add an *ad hoc* correction. The code and instructions for applying this are in the `nd_ehad_corr` 
-directory of `lep_swapper`.
+directory of `Ehad_corr`.
 
 ### `DiffEdep` branch
 
