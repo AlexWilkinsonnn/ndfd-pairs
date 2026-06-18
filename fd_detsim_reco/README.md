@@ -121,7 +121,7 @@ mrb newDev -v v09_78_03 -q e20:prof
 cd srcs/
 git clone git@github.com:AlexWilkinsonnn/duneextrapolation.git
 cd duneextrapolation/
-git checkout simchannels_for_v07_06_02_dunetpc
+git checkout AddEtrim
 cd ../
 git clone git@github.com:AlexWilkinsonnn/larsim.git
 cd larsim/
