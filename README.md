@@ -32,6 +32,52 @@ Caveats of this dataset due to software restrictions:
 This workflow does not require the `nd_detsim/` step. Instructions can be found at the bottom of
 the READMEs.
 
+## Recent developments: 'DiffEdep' and ND sim. improvements
+
+The main branch of this repository has not changed meaningfully in the recent past, as we've 
+considered different improvements and directions the ndfd-transformer program will go. These
+improvements and developments have taken place in the two other branches, first in `lep_swapper`,
+and then in `DiffEdep`.
+
+### `lep_swapper` branch
+
+In Spring 2024, we thought we were ready to develop a training dataset with oscillations, where 
+a muon neutrino event at the ND would be paired with an oscillated electron neutrino event at 
+the FD. This feature was going to be developed in the `lep_swapper` branch. However, we soon 
+discovered that we were not ready for this step because we saw that we were not simulating 
+the ND properly. Because we had been simulating the entire ND hall as an infinite vat of LAr, 
+the simulated muonic and hadronic components were both wrong, leading to the wrong 
+relationship between true and reco. energies at the ND. For muons, the error was due to the 
+gap between TMS/ND-GAr and ND-LAr, which when simulated as LAr instead of air leads to way 
+more energy deposited by the muon in that region, an overall shorter muon track, and not 
+enough energy reconstructed for tracker-matched muons. The fix here was to simulate just the muon 
+in a realistic ND hall, and use those reco. quantities stitched together with the hadronic 
+system as a complete ND event. The code to do this is in 
+`ndfd_depos/nd-sim-tools/inputs/ND_CAFMaker/makeCAF_resim-muon.cxx`, which is called by an 
+edited version of 
+`/ndfd_depos/nd-sim-tools/produce_scripts/produce_edep-paramreco_larbath_transrots_tdr.sh`. 
+The hadronic problem is similar, but the fix is more complicated. If we simulate the ND as 
+a vat of LAr, then the dead region is not dense enough, so on average the hadrons travel 
+too far in simulation, depositing too much energy in active regions, resulting in a reco. 
+energy that's too high. While we don't have a full fix of this, we have a two-step partial 
+fix. The first step is the Ehad density correction, where we add in the energy of the inactive 
+hits, but with weights applied to account for the density differences. This is done in 
+`ndfd_depos/nd-sim-tools/inputs/sim_inputs_larbath_selected_ndfd_pairs/dumpTree_tdr_nogeoeff_larbath.py`, 
+lines 253-634. This doesn't totally take care of the unrealistic reconstruction, so we also 
+add an *ad hoc* correction. The code and instructions for applying this are in the `nd_ehad_corr` 
+directory of `lep_swapper`.
+
+### `DiffEdep` branch
+
+After failing to perfectly recover the ND performance using the hadronic energy corrections, 
+we decided instead to start experimenting with a dataset that breaks the symmetry in energy 
+deposits between the two detectors, hence the name 'Diff[erent]Edep'. In this training dataset, 
+we take the same GENIE event, and place it once in the ND and once in the FD, ensuring that 
+the energy deposits in each case are realistic and that we get the right reconstruction 
+performance. This branch also includes an additional branch in the paired dataset, 
+`nd_paramreco_part`, which contains true FS particle information from each event for the 
+purpose of benchmarking the NDFD transformer.
+
 ## Moving data around
 
 To make use of both Fermigrid and GPU resources I had to copy files to and from dCache to an
@@ -90,8 +136,8 @@ htgettoken -a htvaultprod.fnal.gov -i dune
 # Storing bearer token in /run/user/NUID/bt_uNUID
 export BEARER_TOKEN_FILE=/run/user/<NUID>/bt_u<NUID>
 setup ifdhc
-# I get some errors when the command looks for the proxy that doesnt exist but the copy still works
-# To get rid of these to use the commands in a pipe just redirect stderr with 2>/dev/null
+export IFDH_PROXY_ENABLE=0
+export IFDH_TOKEN_ENABLE=1
 ifdh cp /pnfs/dune/persistent/...
 ```
 
