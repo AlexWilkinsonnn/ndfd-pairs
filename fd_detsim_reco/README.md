@@ -112,6 +112,12 @@ Not bothering with git submodules for the duneextrapolation part of this build b
 # Get main branch of dunetpc
 git submodule update --init --remote fd_detsim_reco/dunetpc
 
+# In the DiffEdep branch, we want to set up a different 
+# branch of `dunetpc` that gives us Etrim at the FD.
+cd fd_detsim_reco/dunetpc
+git checkout AddEtrim
+cd ../../
+
 # Build duneextrapolation larsoft module
 cd fd_detsim_reco/
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
